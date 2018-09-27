@@ -1,0 +1,19 @@
+
+<div id="wrapper">
+    <h1>Note Scraper</h1>
+    <h2><i>If you can do this...the homework should be no problem.</i></h2>
+    <div class="row">
+    <div id="listings" class="col-md-6">
+    {{#each listing}}
+        <p data-id={{this._id}}>{{this.title}} </br>
+        {{this.link}} </br>
+        {{this.location}}</br>
+        {{this.date}} </hr>
+    {{/each}}
+
+    </div>
+    <div id="notes"class="col-md-6"></div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="app.js"></script>

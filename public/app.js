@@ -1,11 +1,11 @@
 // Grab the listings as a json
-$.getJSON("/listings", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#listings").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-  }
-});
+// $.getJSON("/", function(data) {
+//   // For each one
+//   for (var i = 0; i < data.length; i++) {
+//     // Display the apropos information on the page
+//     $("#listings").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+//   }
+// });
 
 
 // Whenever someone clicks a p tag
@@ -14,7 +14,6 @@ $(document).on("click", "p", function() {
   $("#notes").empty();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
-
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
@@ -22,7 +21,7 @@ $(document).on("click", "p", function() {
   })
     // With that done, add the note information to the page
     .then(function(data) {
-      console.log(data);
+      // console.log(data);
       // The title of the article
       $("#notes").append("<h2>" + data.title + "</h2>");
       // An input to enter a new title
