@@ -1,14 +1,16 @@
 
 <div id="wrapper">
-    <h1>Note Scraper</h1>
-    <h2><i>If you can do this...the homework should be no problem.</i></h2>
+    <h1>Note List</h1>
+    <h2><i>See a list of jobs you have noted.</i></h2>
     <div class="row">
     <div id="listings" class="col-md-6">
-    {{#each listing}}
-        <p data-id={{this._id}}>{{this.title}} <br>
-        {{this.link}} <br>
-        {{this.location}}<br>
-        {{this.date}} <hr>
+    {{#each notes}}
+        <p data-id={{this._id}}>
+        {{this.listing.title}} <br>
+        {{this.listing.link}} <br>
+
+        {{this.title}} <br>
+        {{this.body}} <hr>
     {{/each}}
 
     </div>

@@ -99,6 +99,7 @@ app.get("/listings/:id", function(req, res) {
 // Route for saving/updating an Article's associated Note
 app.post("/listings/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
+  req.body.listing = req.params.id;
   db.Note.create(req.body)
     .then(function(dbNote) {
       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
@@ -115,6 +116,24 @@ app.post("/listings/:id", function(req, res) {
       res.json(err);
     });
 });
+
+// Route for grabbing all notes
+app.get("/notes/", function(req, res) {
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.Note.find({})
+      // ..and populate all of the notes associated with it
+      .populate("listing")
+      .then(function(dbNotes) {
+        //   console.log(dbNotes)
+        // If we were able to successfully find an Article with the given id, send it back to the client
+        res.render("notes", {notes : dbNotes});
+        // res.json(dbNotes)
+    })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
 
 // Route for getting all Articles from the db
 app.get("*", function(req, res) {
