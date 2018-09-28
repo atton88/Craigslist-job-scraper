@@ -42,7 +42,7 @@ app.get("/scrape", function(req, res) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every h2 within an article tag, and do the following:
+    // Now, we grab every h2 within an listing tag, and do the following:
     $(".result-row").each(function(i, element) {
       // Save an empty result object
       var result = {};
@@ -58,7 +58,7 @@ app.get("/scrape", function(req, res) {
       result.date = $(this).find($(".result-date"))
         .text();
 
-      // Create a new Article using the `result` object built from scraping
+      // Create a new listing using the `result` object built from scraping
       db.Listing.create(result)
         .then(function(dbListing) {
           // View the added result in the console
@@ -70,7 +70,7 @@ app.get("/scrape", function(req, res) {
         });
     });
 
-    // If we were able to successfully scrape and save an Article, send a message to the client
+    // If we were able to successfully scrape and save an listing, send a message to the client
     // res.json(result);
 
     res.send("Scrape Complete");
@@ -79,7 +79,7 @@ app.get("/scrape", function(req, res) {
 
 
 
-// Route for grabbing a specific Article by id, populate it with it's note
+// Route for grabbing a specific listing by id, populate it with it's note
 app.get("/listings/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   db.Listing.findOne({ _id: req.params.id })
@@ -87,7 +87,7 @@ app.get("/listings/:id", function(req, res) {
     .populate("note")
     .then(function(dbListing) {
         console.log(dbListing)
-      // If we were able to successfully find an Article with the given id, send it back to the client
+      // If we were able to successfully find an listing with the given id, send it back to the client
       res.json(dbListing);
     })
     .catch(function(err) {
@@ -96,19 +96,19 @@ app.get("/listings/:id", function(req, res) {
     });
 });
 
-// Route for saving/updating an Article's associated Note
+// Route for saving/updating an listing's associated Note
 app.post("/listings/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
   req.body.listing = req.params.id;
   db.Note.create(req.body)
     .then(function(dbNote) {
-      // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+      // If a Note was created successfully, find one listing with an `_id` equal to `req.params.id`. Update the listing to be associated with the new Note
       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
       return db.Listing.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
     })
     .then(function(dbListing) {
-      // If we were able to successfully update an Article, send it back to the client
+      // If we were able to successfully update an listing, send it back to the client
       res.json(dbListing);
     })
     .catch(function(err) {
@@ -125,7 +125,7 @@ app.get("/notes/", function(req, res) {
       .populate("listing")
       .then(function(dbNotes) {
         //   console.log(dbNotes)
-        // If we were able to successfully find an Article with the given id, send it back to the client
+        // If we were able to successfully find an listing with the given id, send it back to the client
         res.render("notes", {notes : dbNotes});
         // res.json(dbNotes)
     })
@@ -135,12 +135,12 @@ app.get("/notes/", function(req, res) {
       });
   });
 
-// Route for getting all Articles from the db
+// Route for getting all listings from the db
 app.get("*", function(req, res) {
-    // Grab every document in the Articles collection
+    // Grab every document in the listings collection
     db.Listing.find({})
       .then(function(dbListing) {
-        // If we were able to successfully find Articles, send them back to the client
+        // If we were able to successfully find listings, send them back to the client
           res.render("index", {listing : dbListing});
       })
       .catch(function(err) {

@@ -1,19 +1,29 @@
+<nav class="navbar fixed-top navbar-light bg-info ">
+  <span class="navbar-brand"><h2>Craigslist Job Scraper </h2>
+  <i>This website takes the developer job postings from Craigslist and lists them so you can add notes to them.</i></span>
+    {{!-- <button id="scrapeButton" type="button" class="btn btn-success btn-lg border">SCRAPE</button>
+    <button id="notesButton" type="button" class="btn btn-warning btn-lg border">NOTES</button> --}}
 
-<div id="wrapper">
-    <h1>Note Scraper</h1>
-    <h2><i>If you can do this...the homework should be no problem.</i></h2>
+</nav>
+
+<div class="container-fluid bg-info bg-light">
     <div class="row">
-    <div id="listings" class="col-md-6">
+        
+    <div id="listings" class="col-md-8">
     {{#each listing}}
-        <p data-id={{this._id}}>{{this.title}} <br>
-        {{this.link}} <br>
-        {{this.location}}<br>
-        {{this.date}} <hr>
+        <div class="listingDiv" data-id={{this._id}}>
+            <p class="h3">{{this.title}}</p>
+            {{this.date}} <br>
+            {{this.location}}<br>
+            <a href={{this.link}}>Link to Craigslist</a>
+            <hr>
+        </div>
     {{/each}}
 
     </div>
-    <div id="notes"class="col-md-6"></div>
-</div>
+
+        <div id="notes" class="fixed-right col-md-4"></div>
+    </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="app.js"></script>

@@ -1,21 +1,30 @@
+<nav class="navbar fixed-top navbar-light bg-info ">
+  <span class="navbar-brand"><h2>Notes List</h2>
+  <i>See a list of jobs you have noted.</i></span>
+    {{!-- <button id="scrapeButton" type="button" class="btn btn-success btn-lg border">SCRAPE</button>
+    <button id="notesButton" type="button" class="btn btn-warning btn-lg border">NOTES</button> --}}
 
-<div id="wrapper">
-    <h1>Note List</h1>
-    <h2><i>See a list of jobs you have noted.</i></h2>
-    <div class="row">
-    <div id="listings" class="col-md-6">
+</nav>
+
+<div class="container-fluid bg-info bg-light">
+    <div id="listings">
     {{#each notes}}
-        <p data-id={{this._id}}>
-        {{this.listing.title}} <br>
-        {{this.listing.link}} <br>
+        <p data-id={{this._id}} class="h3">
+        {{this.listing.title}}</p>
+        <button id="deleteButton" type="button" class="btn btn-success btn-lg border float-right">Delete Note</button>
+
+
 
         {{this.title}} <br>
-        {{this.body}} <hr>
+        {{this.body}} <br>
+
+            <a href={{this.listing.link}}>Link to Craigslist</a> 
+            <hr>
+
+
     {{/each}}
 
     </div>
-    <div id="notes"class="col-md-6"></div>
-</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="app.js"></script>
